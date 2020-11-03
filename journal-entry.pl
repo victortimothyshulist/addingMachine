@@ -1645,7 +1645,7 @@ sub balance_sheet
     my $total_lande_html = '<table><tr><td width="250px"><h2><u>Total Liabilities & Equity</u></h2></td><td>&nbsp</td><td align="right"><h2><u>'.displaybal($total_liabilities + $total_equity).'</u></h2></td><td>&nbsp;</td></tr></table>';
 
    my $INC_PATH = 'file://'.$thecwd.'/income.html';
-   my $LIST_OF_JOURNAL_ENTRIES = 'file://'.$thecwd.'/LIST_OF_JOURNAL_ENTRIES.html';
+   my $LIST_OF_JOURNAL_ENTRIES = 'file://'.$thecwd.'/LIST_OF_JOURNAL_ENTRIES.html#bottom';
     
     my $html = "<html><title>BALANCE SHEET</title><body><h1>$COMPANY</h1><br><a href='___INC_PATH___' ><b>INCOME STATEMENT</b></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='___LIST_OF_JOURNAL_ENTRIES___' ><b>LIST OF ENTRIES</b></a><table border='0'><tr><td valign='top'><br>$assets_html</td><td valign='top'>$liabilities_html</td></tr><tr><td>&nbsp</td><td valign ='top'>$equity_html</td></tr><tr><td>$total_assets_html</td><td>$total_lande_html</td></tr></table></body></html>";
     $html =~ s/___INC_PATH___/$INC_PATH/g;
@@ -2047,7 +2047,7 @@ sub produce_journal_entries
 
 		$je_html .= '</table><br><br>';
 		$html .= $je_html;
-		$html .= '<center><h2><a href="file://'.$thecwd.'/balance.html'.'">Click here to go back to Balance Sheet</a>';
+		$html .= '<center><h2><a name="bottom" href="file://'.$thecwd.'/balance.html'.'">Click here to go back to Balance Sheet</a>';
 
 		$sth->finish();
 		$html .= '</font></center></body></html>';
