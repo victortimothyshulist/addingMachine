@@ -174,7 +174,7 @@ sub display_je
 	}
 	foreach my $acc (sort keys %{$cr})
 	{
-		$ln = $acc.' '.sprintf("%80s", $accounts{$acc});
+		$ln = $acc.' '.sprintf("%60s", $accounts{$acc});
 		$ln .= ' ';
 		$ln .= (" " x 15);
 		$ln .= sprintf("%14s", c2d($cr->{$acc}));
