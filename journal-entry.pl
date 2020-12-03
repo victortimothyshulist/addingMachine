@@ -157,18 +157,18 @@ sub display_je
 	print $date.': '.$comment."\n\n";
 
 	my $ln = (" " x 5);
-	$ln .= (" " x 80);
+	$ln .= (" " x 60);
 
 	$ln .= sprintf("%15s", "Debit");	
 	$ln .= sprintf("%15s", "Credit");
 
 	print $ln."\n";
-	print ("-" x 116);
+	print ("-" x 96);
 	print "\n\n";
 
 	foreach my $acc (sort { $a <=> $b } keys %{$dr})
 	{
-		$ln = $acc.' '.sprintf("%80s",$accounts{$acc}).' '.sprintf("%14s",c2d($dr->{$acc}));
+		$ln = $acc.' '.sprintf("%60s",$accounts{$acc}).' '.sprintf("%14s",c2d($dr->{$acc}));
 		print $ln."\n";
 			
 	}
@@ -181,17 +181,17 @@ sub display_je
 		print $ln."\n";
 	}	
 
-	print ("-" x 116)."\n";
+	print ("-" x 96)."\n";
 	print "\n\n"; 	
 	if($msg) 
 	{
 		print '>>>>>>> '.$msg;
 	}
-                print "EXAMPLES (don't type the brackets ('[' and ']' in):\n\n";
-                print "To debit account 1010 by \$500, enter: [1010 500d] OR just [1010 500], so that'll increase the balance by 500\n";
-                print "To credit account 1020 by \$300, enter: [1020 300c] OR [1020 300-] so that'll decrease the balance by 300\n";
-                print "To debit account 5030 (buying something worth \$700), enter: [5030 700d] OR just [5030 700]\n";
-                print "To credit account 5010 (returning an item to store) by \$650, enter: [5010 650-] OR [5010 650c]\n";
+                #print "EXAMPLES (don't type the brackets ('[' and ']' in):\n\n";
+                #print "To debit account 1010 by \$500, enter: [1010 500d] OR just [1010 500], so that'll increase the balance by 500\n";
+                #print "To credit account 1020 by \$300, enter: [1020 300c] OR [1020 300-] so that'll decrease the balance by 300\n";
+                #print "To debit account 5030 (buying something worth \$700), enter: [5030 700d] OR just [5030 700]\n";
+                #print "To credit account 5010 (returning an item to store) by \$650, enter: [5010 650-] OR [5010 650c]\n";
 
 	print "\n'p' = post entry, 'c'= cancel entry, 'q' = quit program\n\n";
 }
