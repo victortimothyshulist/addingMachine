@@ -2025,10 +2025,10 @@ sub produce_journal_entries
 		if(!@debs)
 		{
 			print "\n\n********************************************************* No journal entries were made so far.\n\n";
-			next;
+			return;
 		}
 
-	                  $je_html  .=  '<h4><u><a name="je'.$pje.'">Entry # '.$pje.' on '.$pdate.' "'.$pcomment.'"</a></u></h4>';
+	    $je_html  .=  '<h4><u><a name="je'.$pje.'">Entry # '.$pje.' on '.$pdate.' "'.$pcomment.'"</a></u></h4>';
 		#$je_html .= '<h4><u>Entry # '.$pje.' on '.$pdate.' "'.$pcomment.'"</u></h4>';
 		$je_html .= "<table cellpadding='10px' style='font-size:12pt'>";
 		$je_html .= '<tr><th width="425px">Account</th><th width="80px">Debit</th><th width="80px">Credit</th></tr>';
