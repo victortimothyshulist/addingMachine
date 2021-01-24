@@ -1308,7 +1308,7 @@ sub generate_ledger_for
 		my @row = ();
 		my $html = '';
 
-		$html = '<html><head><style type="text/css"> th { font-family:arial; color:#FFFFFF; background-color: #506A9A; font-weight: normal;} h2 { font-family:arial; color: #506A9A; font-weight: bold;} h4 { font-family:arial; color: #506A9A; font-weight: bold;} h1 { font-family:arial; color: #506A9A; font-weight: bold;} h3 { font-family:arial; color: #506A9A; font-weight: bold;} h5 { font-family:arial; color: #506A9A; font-weight: bold;} td { font-family:arial; background-color: #BACCFF; font-weight: normal;} td.number { font-family:arial;; text-align:right; } table.border { #506a9a solid;}
+		$html = '<html><head><style type="text/css"> th { font-size:10pt; font-family:arial; color:#FFFFFF; background-color: #506A9A; font-weight: normal;} h2 { font-size:10pt;  font-family:arial; color: #506A9A; font-weight: bold;} h4 { font-size:10pt; font-family:arial; color: #506A9A; font-weight: bold;} h1 { font-size:10pt; font-family:arial; color: #506A9A; font-weight: bold;} h3 { font-size:10pt; font-family:arial; color: #506A9A; font-weight: bold;} h5 { font-size:10pt; font-family:arial; color: #506A9A; font-weight: bold;} td { font-size:10pt; font-family:arial; background-color: #BACCFF; font-weight: normal;} td.number { font-family:arial;; text-align:right; } table.border { #506a9a solid;}
 </style></head>';
 
 		$html .= '<body font="arial"><center><a href="file://'.$thecwd.'/balance.html'.'">Balance Sheet</a>';
@@ -1946,7 +1946,7 @@ sub produce_journal_entries
 {
 		my $sql = 'select journal_entries.id, transaction_date, comment, account, debiting_or_crediting, amount from journal_entries inner join journal_entry_part where journal_entries.id = journal_entry_part.je_id order by journal_entries.id asc, debiting_or_crediting desc';
 		my $html = '<html><title>LIST OF ENTRIES</title></a><head><style type="text/css"> th { font-family:arial; color:#FFFFFF; background-color: #506A9A; font-weight: normal;} h2 { font-family:arial; color: #506A9A; font-weight: bold;} h4 { font-family:arial; color: #506A9A; font-weight: bold;} h1 { font-family:arial; color: #506A9A; font-weight: bold;} h3 { font-family:arial; color: #506A9A; font-weight: bold;} h5 { font-family:arial; color: #506A9A; font-weight: bold;} td { font-family:arial; background-color: #BACCFF; font-weight: normal;} td.number { font-family:arial;; text-align:right; } table.border { #506a9a solid;}
-</style></head><body style="font-size:14pt"><center><h2><font color="#FF0000"
+</style></head><body style="font-size:10pt"><center><h2><font color="#FF0000"
 >Victor & Melanie</font>&nbsp;<font color="#000000"></font> Inc: Journal entries.</h2>';
 
 		my $sth = $dbh->prepare($sql);
@@ -1980,7 +1980,7 @@ sub produce_journal_entries
 		                                   $je_html = '<a href="file://'.$thecwd.'/balance.html'.'"><b>* *Click here to go back to Balance Sheet</b></a>';
 				$je_html .= '<h4><u><a name="je'.$pje.'">Entry # '.$pje.' on '.$pdate.' "'.$pcomment.'"</a></u></h4>';
 
-				$je_html .= "<table cellpadding='10px' style='font-size:12pt'>";
+				$je_html .= "<table cellpadding='10px' style='font-size:10pt'>";
 				$je_html .= '<tr><th width="425px">Account</th><th width="80px">Debit</th><th width="80px">Credit</th></tr>';
 	
 				foreach my $deb (@debs)
@@ -2030,7 +2030,7 @@ sub produce_journal_entries
 
 	    $je_html  .=  '<h4><u><a name="je'.$pje.'">Entry # '.$pje.' on '.$pdate.' "'.$pcomment.'"</a></u></h4>';
 		#$je_html .= '<h4><u>Entry # '.$pje.' on '.$pdate.' "'.$pcomment.'"</u></h4>';
-		$je_html .= "<table cellpadding='10px' style='font-size:12pt'>";
+		$je_html .= "<table cellpadding='10px' style='font-size:10pt'>";
 		$je_html .= '<tr><th width="425px">Account</th><th width="80px">Debit</th><th width="80px">Credit</th></tr>';
 	
 		foreach my $deb (@debs)
