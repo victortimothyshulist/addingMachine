@@ -207,9 +207,14 @@ $SQL_CREATE =~ s/{__NEW_DB_NAME__}/$new_db_name/g;
 $SQL_CREATE =~ s/{__BIZ_NAME__}/$COMPANY/g;
 $SQL_CREATE =~ s/{__CE__}/$CE_ACC/g;
 $SQL_CREATE =~ s/{__RE__}/$ACCOUNT_FOR_RETAINED_EARNINGS/g;
-$SQL_CREATE =~ s/{__DAY_1__}/$usingdate/;
-$SQL_CREATE =~ s/{__DAY_1__}/$usingdate/;
 $SQL_CREATE =~ s/{__NEXT_YEAR__}/$current_fiscal_year/;
+
+$from_month = sprintf("%02d", $from_month);
+$from_day = sprintf("%02d", $from_day);
+
+my $new_ud = $current_fiscal_year."-".$from_month.'-'.$from_day;
+
+$SQL_CREATE =~ s/{__DAY_1__}/$new_ud/;
 
 my $sql_fn = $new_db_name.".sql";
 if(!open(FH, ">$sql_fn"))
@@ -220,7 +225,13 @@ if(!open(FH, ">$sql_fn"))
 
 print FH $SQL_CREATE."\n";
 close(FH);
-print "\nDone! Created $sql_fn\n";
+
+# close previous year....
+my $sql = "UPDATE dateinfo SET year_closed='Y'";
+my $sth = $dbh->prepare($sql);
+$sth->execute() or die "SQL error ->> ".$DBI::errstr."\n";
+
+print "\nDone! New year database created $sql_fn, and old year marked as closed in dateinfo table.\n";
 
 my $NEW_DB_CMD_LINE =  '"'.$PATH_TO_MYSQL_CMD.'" -u root -p'.$pass.' < '.$sql_fn;
 
@@ -456,7 +467,3 @@ sub get_bals
 		}
 	}
 }
-
-
-
-
