@@ -3,7 +3,7 @@
 # COPYRIGHT 2013 VICTOR SHULIST, OTTAWA, ONTARIO CANADA
 # ALL RIGHTS RESERVED.
 #
-#  UPDATED: 2020.
+#  UPDATED: 2020 & 2021.
 #
 
 use strict;
@@ -24,13 +24,6 @@ foreach my $i (1..75) { print "\n"; }
 my %current_balance = ();
 my %types = ();
 
-if(year_closed())
-{
-	print "\n\n* * THIS DATABASE'S FINANCIAL YEAR IS CLOSED.\n\n";
-	<STDIN>;
-	exit(1);
-}
-
 if(!does_balance_sheet_balance())
 {
 	print "\n\n*** BALANCE SHEET DOES NOT BALANCE!  CHECK ALL YOUR OPENING BALANCES.\n\nCAN'T MAKE ANY JOURNAL ENTRIES UNTIL IT DOES.\n\n";<STDIN>;
@@ -38,6 +31,7 @@ if(!does_balance_sheet_balance())
 }
 
 my ($COMPANY, $CE_ACC, $RE_ACC) = get_settings();
+my $expired = 0;
 
 print "\n\n---------------------------------\n\n";
 print "ADDING MACHINE: Journal Entry (ver 1.000 )\n";
@@ -96,6 +90,11 @@ my $usingdate = get_using_date();
 if( ($TODAYTS >= $START_DT_TS) && ($TODAYTS <= $END_DT_TS ) )
 {
     $usingdate = ($todayis[4] + 1).'/'.$todayis[3].'/'.( $todayis[5] + 1900 );
+}
+else
+{
+	$expired = 1;
+	$usingdate = $date_end_fiscalyear;
 }
 
 if($mode eq '')
@@ -193,7 +192,7 @@ sub display_je
                 #print "To debit account 5030 (buying something worth \$700), enter: [5030 700d] OR just [5030 700]\n";
                 #print "To credit account 5010 (returning an item to store) by \$650, enter: [5010 650-] OR [5010 650c]\n";
 
-	print "\n'p' = post entry, 'c'= cancel entry, 'q' = quit program\n\n";
+	print "\n'p' = post entry, 'c'= cancel entry, 'd' = change date, 'q' = quit program\n\n";
 }
 
 sub get_journal_entry_from_user
@@ -273,7 +272,27 @@ sub get_journal_entry_from_user
 	}
 
 	#print "\nEnter account number and amount, end with either 'd' for debit, or 'c' for credit.";	
-	
+	     if(year_closed())
+    {
+		print "\n\n* * THIS DATABASE'S FINANCIAL YEAR IS CLOSED.\n";
+		regenerate_all_ledgers();
+		balance_sheet();
+		income_statement();
+		produce_journal_entries();
+		print("\nIf you forgot to produce the HTML reports before closing the year, You're SCREWED !!!    JUST KIDDING....  I have just produced them :) \n\nCheers !!\n");
+		<STDIN>;
+		exit(1);
+    }
+
+	if($expired == 1)
+	{
+		print("THE FISCAL YEAR OF THIS DATBASE HAS EXPIRED !\n\n");
+		print("You should really consider closing this year's database - we are now after the end date for this fiscal year of this database!\n\n");
+		print("To close the year (and create a new database for the new year), run the ./nextyear.pl command. ");
+		print("\n\nPress enter to continue...");	
+		<STDIN>;
+	}
+
 	while(1)
 	{
 		display_je(\%debits, \%credits, $msg, $date, $comment);
@@ -1947,7 +1966,7 @@ sub produce_journal_entries
 		my $sql = 'select journal_entries.id, transaction_date, comment, account, debiting_or_crediting, amount from journal_entries inner join journal_entry_part where journal_entries.id = journal_entry_part.je_id order by journal_entries.id asc, debiting_or_crediting desc';
 		my $html = '<html><title>LIST OF ENTRIES</title></a><head><style type="text/css"> th { font-family:arial; color:#FFFFFF; background-color: #506A9A; font-weight: normal;} h2 { font-family:arial; color: #506A9A; font-weight: bold;} h4 { font-family:arial; color: #506A9A; font-weight: bold;} h1 { font-family:arial; color: #506A9A; font-weight: bold;} h3 { font-family:arial; color: #506A9A; font-weight: bold;} h5 { font-family:arial; color: #506A9A; font-weight: bold;} td { font-family:arial; background-color: #BACCFF; font-weight: normal;} td.number { font-family:arial;; text-align:right; } table.border { #506a9a solid;}
 </style></head><body style="font-size:10pt"><center><h2><font color="#FF0000"
->Victor & Melanie</font>&nbsp;<font color="#000000"></font> Inc: Journal entries.</h2>';
+>'.$COMPANY.'</font>&nbsp;<font color="#000000"></font> Inc: Journal entries.</h2>';
 
 		my $sth = $dbh->prepare($sql);
 		$sth->execute() or die "SQL error ->> ".$DBI::errstr."\n";
