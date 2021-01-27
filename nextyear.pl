@@ -101,10 +101,10 @@ while(@row = $sth->fetchrow_array)
 { 
     my $type = "";
     if ($row[0] < 2000) {  $type = "ASSET"; }
-    elsif($row[0] >= 2000  && $row[0] <= 3000) { $type = "LIABILITY" ;}
-    elsif($row[0] >= 3000  && $row[0] <= 4000) { $type = "EQUITY" ;}
-    elsif($row[0] >= 4000  && $row[0] <= 5000) { $type = "REVENUE" ;}
-    elsif($row[0] > 5000) { $type = "EXPENSE" ;}
+    elsif($row[0] >= 2000  && $row[0] < 3000) { $type = "LIABILITY" ;}
+    elsif($row[0] >= 3000  && $row[0] < 4000) { $type = "EQUITY" ;}
+    elsif($row[0] >= 4000  && $row[0] < 5000) { $type = "REVENUE" ;}
+    elsif($row[0] >= 5000) { $type = "EXPENSE" ;}
 
     #print $row[0]."  is a ".$type."\n";
     push @{$acc_info{$type}},   [  $row[0], $row[1], $row[2], $row[3]  ]
