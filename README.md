@@ -1,4 +1,4 @@
-# addingMachine
+# Adding Machine
 
 A book-keeping system written in Perl.
 
